@@ -14,7 +14,7 @@ export default function ThemeSwitcher() {
   };
 
   return (
-    <Button onClick={handleClick} isIconOnly variant="light">
+    <Button isIconOnly variant="light" onPress={handleClick}>
       {theme === "light" || isSSR ? <LuMoon size={20} /> : <LuSun size={20} />}
     </Button>
   );

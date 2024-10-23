@@ -21,18 +21,20 @@ import { signOut, useSession } from "next-auth/react";
 import { IoLogInOutline, IoSettingsOutline } from "react-icons/io5";
 import { FiUser } from "react-icons/fi";
 
+import ThemeSwitcher from "./ThemeSwitcher/page";
+
 import Dialog from "@/components/shared/Dialog/page";
 import IDropdownItem from "@/interfaces/dropdownItem.interface";
 import { siteConfig } from "@/config/site";
-import ThemeSwitcher from "./ThemeSwitcher/page";
 
 export default function Header() {
+  const session = useSession();
+
   const {
     isOpen: isOpenSignOutModal,
     onOpen: onOpenSignOutModal,
     onOpenChange: onOpenChangeSignOutModal,
   } = useDisclosure();
-  const session = useSession();
 
   const handleSignOut = async () => {
     await signOut();
@@ -41,11 +43,21 @@ export default function Header() {
 
   const dropdownItems: IDropdownItem[] = [
     {
+      key: "user",
+      children: session.data?.user.current?.name,
+      startContent: <FiUser size={20} />,
+    },
+    {
+      key: "settings",
+      children: "Settings",
+      startContent: <IoSettingsOutline size={20} />,
+    },
+    {
       key: "signOut",
       children: "Sign out",
       color: "danger",
       startContent: <IoLogInOutline size={20} />,
-      onClick: onOpenSignOutModal,
+      onPress: onOpenSignOutModal,
     },
   ];
 
@@ -64,9 +76,9 @@ export default function Header() {
         <NavbarItem>
           <ThemeSwitcher />
         </NavbarItem>
-        {session.status == "loading" ? (
+        {session.status === "loading" ? (
           <Spinner />
-        ) : session.status === "authenticated" ? (
+        ) : session.status === "authenticated" && session.data.user.current ? (
           <NavbarItem>
             <Dropdown backdrop="blur" placement="bottom-end">
               <DropdownTrigger>
@@ -74,7 +86,7 @@ export default function Header() {
                   isBordered
                   className="cursor-pointer"
                   size="sm"
-                  src={session.data.user.image ?? "/no-avatar.jpg"}
+                  src={session.data.user.current.image ?? "/no-avatar.jpg"}
                 />
               </DropdownTrigger>
               <DropdownMenu variant="shadow">
@@ -88,7 +100,7 @@ export default function Header() {
                 {
                   key: "signOut",
                   children: "Sign out",
-                  onClick: async () => await handleSignOut(),
+                  onPress: async () => await handleSignOut(),
                   color: "danger",
                 },
               ]}
@@ -103,10 +115,10 @@ export default function Header() {
             <Button
               as={Link}
               color="primary"
-              href="/login"
+              href="/auth"
               startContent={<IoLogInOutline size={20} />}
             >
-              Login
+              Auth
             </Button>
           </NavbarItem>
         )}

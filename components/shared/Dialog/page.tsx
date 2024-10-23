@@ -37,7 +37,7 @@ export default function Dialog(props: IDialog) {
               </Marginer>
             </ModalBody>
             <ModalFooter>
-              <Button color="danger" variant="light" onClick={onClose}>
+              <Button color="danger" variant="light" onPress={onClose}>
                 Cancel
               </Button>
               {props.actions.map(({ key, ...action }) => (

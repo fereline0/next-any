@@ -41,7 +41,7 @@ export default function ServerSearch() {
             placeholder="Search"
             onChange={handleChange}
           />
-          <Button color="primary" onClick={onServerSearch}>
+          <Button color="primary" onPress={onServerSearch}>
             Search
           </Button>
         </div>

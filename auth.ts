@@ -1,7 +1,9 @@
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
-import loginService from "./services/login.service";
 import bcrypt from "bcryptjs";
+
+import loginService from "./services/login.service";
+import currentUserService from "./services/currentUser.service";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   session: {
@@ -11,6 +13,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   callbacks: {
     async jwt({ token, user }) {
       user && (token.user = user);
+
       return token;
     },
     async session({ session, token, user }) {
@@ -23,18 +26,13 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
     Credentials({
       credentials: {
-        name: { label: "Name", type: "text" },
+        login: { label: "Login", type: "text" },
         password: { label: "Password", type: "password" },
       },
       authorize: async (credentials) => {
-        const hashedPassword = await bcrypt.hash(
-          credentials.password as string,
-          10,
-        );
-
         const user = await loginService(
-          credentials.name as string,
-          hashedPassword,
+          credentials.login as string,
+          credentials.password as string,
         );
 
         if (!user.token) {
@@ -45,4 +43,20 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       },
     }),
   ],
+  events: {
+    async session({ session }) {
+      try {
+        const currentUser = await currentUserService(session.user.token);
+
+        session.user = {
+          token: session.user.token,
+          current: currentUser,
+        };
+      } catch {
+        session.user = {
+          token: session.user.token,
+        };
+      }
+    },
+  },
 });
