@@ -1,5 +1,6 @@
-import IBook from "@/interfaces/book.interface";
 import BookPreview from "../BookPreview/page";
+
+import IBook from "@/interfaces/book.interface";
 import Marginer from "@/components/shared/Marginer/page";
 import ServerPaginate from "@/components/shared/ServerPaginate/page";
 import IPaginate from "@/interfaces/paginate.interface";
@@ -16,7 +17,7 @@ export default function BooksFromCategory(props: IBooksFromCategory) {
           return <BookPreview key={book.id} book={book} />;
         })}
       </div>
-      <ServerPaginate total={props.total} limit={props.limit} />
+      <ServerPaginate limit={props.limit} total={props.total} />
     </Marginer>
   );
 }

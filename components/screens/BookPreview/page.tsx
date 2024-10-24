@@ -1,7 +1,8 @@
-import IBook from "@/interfaces/book.interface";
 import { Card, CardBody, CardFooter } from "@nextui-org/card";
 import { Image } from "@nextui-org/image";
 import Link from "next/link";
+
+import IBook from "@/interfaces/book.interface";
 
 interface IBookPreview {
   book: IBook;

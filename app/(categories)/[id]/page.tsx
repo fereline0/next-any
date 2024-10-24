@@ -21,5 +21,5 @@ export default async function CategoryPage({
     limit,
   );
 
-  return <BooksFromCategory total={total} limit={limit} books={books} />;
+  return <BooksFromCategory books={books} limit={limit} total={total} />;
 }
