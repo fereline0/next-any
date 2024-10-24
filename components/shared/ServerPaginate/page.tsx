@@ -4,8 +4,8 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { Pagination } from "@nextui-org/pagination";
 import { useCallback } from "react";
 
-import IPaginate from "@/interfaces/paginate.interface";
 import pushSearchParams from "@/utils/pushSearchParams";
+import IPaginate from "@/interfaces/paginate.interface";
 
 export default function ServerPaginate(props: IPaginate) {
   const router = useRouter();

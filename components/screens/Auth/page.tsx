@@ -9,11 +9,12 @@ import { signIn } from "next-auth/react";
 import { Tab, Tabs } from "@nextui-org/tabs";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
 
 import createUserService from "@/services/createUser.service";
 import Marginer from "@/components/shared/Marginer/page";
 import loginRequest from "@/requests/login.request";
-import { useRouter } from "next/navigation";
+import registerRequest from "@/requests/register.request";
 
 export default function Auth() {
   const [name, setName] = useState("");
@@ -33,7 +34,7 @@ export default function Auth() {
     Object.keys(loginValidation.formState.errors).length > 0;
 
   const registerValidation = useForm({
-    resolver: zodResolver(loginRequest),
+    resolver: zodResolver(registerRequest),
     values: { name: name, login: login, password: password },
   });
 

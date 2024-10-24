@@ -1,5 +1,6 @@
-import { auth } from "@/auth";
 import { NextResponse } from "next/server";
+
+import { auth } from "@/auth";
 
 export default auth((req) => {
   if (req.auth?.user.current && req.nextUrl.pathname === "/auth") {
