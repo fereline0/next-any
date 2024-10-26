@@ -34,26 +34,26 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           credentials.password as string,
         );
 
-        if (!user.token) {
+        if (user.error || user.data === null) {
           throw new Error();
         }
 
-        return user;
+        return user.data;
       },
     }),
   ],
   events: {
     async session({ session }) {
-      try {
-        const currentUser = await currentUserService(session.user.token);
+      const currentUser = await currentUserService(session.user.token);
 
+      if (currentUser.error || currentUser.data === null) {
         session.user = {
           token: session.user.token,
-          current: currentUser,
         };
-      } catch {
+      } else {
         session.user = {
           token: session.user.token,
+          current: currentUser.data,
         };
       }
     },

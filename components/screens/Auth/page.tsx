@@ -42,13 +42,11 @@ export default function Auth() {
     Object.keys(registerValidation.formState.errors).length > 0;
 
   const handleRegister = async () => {
-    try {
-      await createUserService(name, login, password);
+    const createdUser = await createUserService(name, login, password);
+    if (createdUser.error && createdUser.data === null) {
+      setError(createdUser.error);
+    } else {
       await handleLogin();
-    } catch (error) {
-      if (error instanceof Error) {
-        setError(error.message);
-      }
     }
   };
 

@@ -1,4 +1,5 @@
 import booksService from "@/services/books.service";
+import { notFound } from "next/navigation";
 
 export const revalidate = 0;
 
@@ -11,6 +12,10 @@ export default async function CategoriesPage({
   };
 }) {
   const books = await booksService(page, limit);
+
+  if (books.error || books.data === null) {
+    return notFound();
+  }
 
   return (
     <p>
