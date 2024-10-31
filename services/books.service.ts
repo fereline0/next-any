@@ -1,15 +1,10 @@
 import IService from "@/interfaces/service.interface";
 import IBook from "@/interfaces/book.interface";
-import IPagedResult from "@/interfaces/pagedResult.interface";
+import fetcher from "@/utils/fetcher";
 
-export default async (
-  page: number,
-  limit: number,
-): Promise<IService<IPagedResult<IBook[]>>> => {
+export default async (): Promise<IService<IBook[]>> => {
   try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/Books/?page=${page}&limit=${limit}`,
-    );
+    const res = await fetcher(`${process.env.NEXT_PUBLIC_API_URL}/api/Books`);
 
     const resData = await res.json();
 
@@ -20,10 +15,10 @@ export default async (
       };
     }
 
-    const pagedResult: IPagedResult<IBook[]> = resData;
+    const books: IBook[] = resData;
 
     return {
-      data: pagedResult,
+      data: books,
       error: null,
     };
   } catch (error) {

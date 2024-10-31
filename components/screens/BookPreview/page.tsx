@@ -3,23 +3,31 @@ import { Image } from "@nextui-org/image";
 import Link from "next/link";
 
 import IBook from "@/interfaces/book.interface";
+import authorService from "@/services/author.service";
+import { formatPrice } from "@/utils/format";
 
-interface IBookPreview {
+interface BookPreviewProps {
   book: IBook;
 }
 
-export default function BookPreview(props: IBookPreview) {
+export default async function BookPreview(props: BookPreviewProps) {
+  const author = await authorService(props.book.authorId, 1, 0);
+
+  const formattedPrice = formatPrice(props.book.price);
+
   return (
     <Card isPressable as={Link} href={`/books/${props.book.id}`}>
       <CardBody>
-        {props.book.images && (
-          <Image alt={props.book.title} src={props.book.images[0]} />
-        )}
+        <Image
+          alt={props.book.title}
+          src={props.book.image ?? "/no-avatar.jpg"}
+        />
       </CardBody>
       <CardFooter>
-        <div className="w-full flex justify-between gap-2">
+        <div className="text-pretty">
           <b>{props.book.title}</b>
-          <span>{props.book.price}₽</span>
+          <p className="text-gray-400">{author.data?.name}</p>
+          <span>{formattedPrice}</span>
         </div>
       </CardFooter>
     </Card>

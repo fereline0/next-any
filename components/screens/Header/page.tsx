@@ -26,6 +26,7 @@ import ThemeSwitcher from "./ThemeSwitcher/page";
 import Dialog from "@/components/shared/Dialog/page";
 import IDropdownItem from "@/interfaces/dropdownItem.interface";
 import { siteConfig } from "@/config/site";
+import { LuSearch } from "react-icons/lu";
 
 export default function Header() {
   const session = useSession();
@@ -64,7 +65,7 @@ export default function Header() {
   const enabledDropdownItems = dropdownItems.filter((item) => !item.isDisabled);
 
   return (
-    <Navbar shouldHideOnScroll maxWidth="2xl">
+    <Navbar maxWidth="2xl">
       <NavbarContent>
         <NavbarBrand>
           <Link className="font-bold text-inherit" href="/">
@@ -73,6 +74,11 @@ export default function Header() {
         </NavbarBrand>
       </NavbarContent>
       <NavbarContent justify="end">
+        <NavbarItem>
+          <Button variant="light" isIconOnly>
+            <LuSearch size={20} />
+          </Button>
+        </NavbarItem>
         <NavbarItem>
           <ThemeSwitcher />
         </NavbarItem>

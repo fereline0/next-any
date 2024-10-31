@@ -1,17 +1,11 @@
-import booksService from "@/services/books.service";
 import { notFound } from "next/navigation";
+
+import booksService from "@/services/books.service";
 
 export const revalidate = 0;
 
-export default async function CategoriesPage({
-  searchParams: { page = 1, limit = 20 } = {},
-}: {
-  searchParams?: {
-    page?: number;
-    limit?: number;
-  };
-}) {
-  const books = await booksService(page, limit);
+export default async function CategoriesPage() {
+  const books = await booksService();
 
   if (books.error || books.data === null) {
     return notFound();

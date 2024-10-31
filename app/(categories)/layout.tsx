@@ -1,6 +1,7 @@
-import Categories from "@/components/screens/Categories/page";
-import categoriesService from "@/services/categories.service";
 import { notFound } from "next/navigation";
+
+import categoriesService from "@/services/categories.service";
+import Categories from "@/components/pages/Categories/layout";
 
 export const revalidate = 0;
 

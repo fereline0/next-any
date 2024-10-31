@@ -12,7 +12,6 @@ import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 
 import createUserService from "@/services/createUser.service";
-import Marginer from "@/components/shared/Marginer/page";
 import loginRequest from "@/requests/login.request";
 import registerRequest from "@/requests/register.request";
 
@@ -43,6 +42,7 @@ export default function Auth() {
 
   const handleRegister = async () => {
     const createdUser = await createUserService(name, login, password);
+
     if (createdUser.error && createdUser.data === null) {
       setError(createdUser.error);
     } else {
@@ -74,7 +74,7 @@ export default function Auth() {
     <div className="sm:flex items-center justify-center">
       <Card className="max-w-full w-full sm:max-w-80">
         <CardBody>
-          <Marginer y={8}>
+          <div className="space-y-2">
             {error && (
               <Card shadow="none">
                 <CardBody>
@@ -84,7 +84,7 @@ export default function Auth() {
             )}
             <Tabs fullWidth>
               <Tab title="Login">
-                <Marginer y={8}>
+                <div className="space-y-2">
                   <Input
                     errorMessage={
                       loginValidation.formState.errors.login?.message
@@ -116,10 +116,10 @@ export default function Auth() {
                   >
                     Login
                   </Button>
-                </Marginer>
+                </div>
               </Tab>
               <Tab title="Register">
-                <Marginer y={8}>
+                <div className="space-y-2">
                   <Input
                     errorMessage={
                       registerValidation.formState.errors.name?.message
@@ -161,10 +161,10 @@ export default function Auth() {
                   >
                     Register
                   </Button>
-                </Marginer>
+                </div>
               </Tab>
             </Tabs>
-          </Marginer>
+          </div>
         </CardBody>
       </Card>
     </div>
