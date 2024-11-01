@@ -1,6 +1,5 @@
 import IAuthor from "@/interfaces/author.interface";
 import IService from "@/interfaces/service.interface";
-import fetcher from "@/utils/fetcher";
 
 export default async (
   id: number,
@@ -8,14 +7,8 @@ export default async (
   limit: number,
 ): Promise<IService<IAuthor>> => {
   try {
-    const searchParams = new URLSearchParams({
-      page: page.toString(),
-      limit: limit.toString(),
-    });
-
-    const res = await fetcher(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/Authors/${id}/`,
-      searchParams,
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/Authors/${id}?page=${page}&limit=${limit}`,
     );
 
     const resData = await res.json();

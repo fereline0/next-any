@@ -8,7 +8,7 @@ export default async (
 ): Promise<IService<IPagedResult<IBook[]>>> => {
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/Books/?page=${page}&limit=${limit}`,
+      `${process.env.NEXT_PUBLIC_API_URL}/api/Books?page=${page}&limit=${limit}`,
     );
 
     const resData = await res.json();

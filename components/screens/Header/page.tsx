@@ -26,7 +26,8 @@ import ThemeSwitcher from "./ThemeSwitcher/page";
 import Dialog from "@/components/shared/Dialog/page";
 import IDropdownItem from "@/interfaces/dropdownItem.interface";
 import { siteConfig } from "@/config/site";
-import { LuSearch } from "react-icons/lu";
+import { LuSearch, LuShoppingCart } from "react-icons/lu";
+import { Badge } from "@nextui-org/badge";
 
 export default function Header() {
   const session = useSession();
@@ -74,6 +75,13 @@ export default function Header() {
         </NavbarBrand>
       </NavbarContent>
       <NavbarContent justify="end">
+        <NavbarItem>
+          <Badge content="9+" color="danger">
+            <Button variant="light" isIconOnly>
+              <LuShoppingCart size={20} />
+            </Button>
+          </Badge>
+        </NavbarItem>
         <NavbarItem>
           <Button variant="light" isIconOnly>
             <LuSearch size={20} />
