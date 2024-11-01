@@ -29,7 +29,7 @@ export default async function Book(props: BookProps) {
                 alt={props.book.title}
                 src={props.book.image ?? "/no-avatar.jpg"}
               />
-              <span>{formattedPrice}</span>
+              <span className="text-center">{formattedPrice}</span>
               <Button
                 color="primary"
                 startContent={<LuShoppingCart size={20} />}
@@ -44,8 +44,8 @@ export default async function Book(props: BookProps) {
       <Main>
         <Card>
           <CardBody>
-            <div className="text-pretty">
-              <b>{props.book.title}</b>
+            <div className="text-pretty space-y-2">
+              <b className="text-xl">{props.book.title}</b>
               <p>{props.book.description}</p>
               <div></div>
               <Link href={`/authors/${author.data?.id}`}>

@@ -7,16 +7,27 @@ export const revalidate = 0;
 
 export default async function CategoryPage({
   params,
+  searchParams: { page = 1, limit = 20 } = {},
 }: {
   params: {
     id: number;
   };
+  searchParams?: {
+    page?: number;
+    limit?: number;
+  };
 }) {
-  const booksFromCategory = await booksFromCategoryService(params.id);
+  const booksFromCategory = await booksFromCategoryService(
+    params.id,
+    page,
+    limit,
+  );
 
   if (booksFromCategory.error || booksFromCategory.data === null) {
     return notFound();
   }
 
-  return <BooksFromCategory books={booksFromCategory.data} />;
+  const { items, total } = booksFromCategory.data;
+
+  return <BooksFromCategory books={items} limit={limit} total={total} />;
 }

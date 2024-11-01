@@ -7,11 +7,11 @@ import Main from "@/components/shared/Content/Main/page";
 import ServerPaginate from "@/components/shared/ServerPaginate/page";
 import IPaginate from "@/interfaces/paginate.interface";
 
-interface BooksFromCategoryProps extends IPaginate {
+interface BooksProps extends IPaginate {
   books: IBook[];
 }
 
-export default function BooksFromCategory(props: BooksFromCategoryProps) {
+export default function Books(props: BooksProps) {
   return (
     <Content>
       <SideBar>

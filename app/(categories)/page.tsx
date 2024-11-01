@@ -1,21 +1,24 @@
 import { notFound } from "next/navigation";
-
 import booksService from "@/services/books.service";
+import Books from "@/components/pages/Books/page";
 
 export const revalidate = 0;
 
-export default async function CategoriesPage() {
-  const books = await booksService();
+export default async function CategoriesPage({
+  searchParams: { page = 1, limit = 20 } = {},
+}: {
+  searchParams?: {
+    page?: number;
+    limit?: number;
+  };
+}) {
+  const booksResponse = await booksService(page, limit);
 
-  if (books.error || books.data === null) {
+  if (booksResponse.error || booksResponse.data === null) {
     return notFound();
   }
 
-  return (
-    <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda fugit
-      aperiam ab vero ex praesentium officiis, illum vitae? Excepturi magni
-      velit quisquam ad similique nisi dolor nihil tempore nostrum aspernatur.
-    </p>
-  );
+  const { items, total } = booksResponse.data;
+
+  return <Books books={items} total={total} limit={limit} />;
 }
