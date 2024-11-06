@@ -10,6 +10,7 @@ import { Tab, Tabs } from "@nextui-org/tabs";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
+import md5 from "md5";
 
 import createUserService from "@/services/createUser.service";
 import loginRequest from "@/requests/login.request";
@@ -26,7 +27,7 @@ export default function Auth() {
 
   const loginValidation = useForm({
     resolver: zodResolver(loginRequest),
-    values: { name: name, login: login, password: password },
+    values: { name, login, password },
   });
 
   const loginButtonDisabled =
@@ -34,16 +35,18 @@ export default function Auth() {
 
   const registerValidation = useForm({
     resolver: zodResolver(registerRequest),
-    values: { name: name, login: login, password: password },
+    values: { name, login, password },
   });
 
   const registerButtonDisabled =
     Object.keys(registerValidation.formState.errors).length > 0;
 
   const handleRegister = async () => {
-    const createdUser = await createUserService(name, login, password);
+    const hashedPassword = md5(password);
 
-    if (createdUser.error && createdUser.data === null) {
+    const createdUser = await createUserService(name, login, hashedPassword);
+
+    if (createdUser.error) {
       setError(createdUser.error);
     } else {
       await handleLogin();

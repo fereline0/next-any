@@ -1,6 +1,8 @@
 import { notFound } from "next/navigation";
 import booksService from "@/services/books.service";
 import Books from "@/components/pages/Books/page";
+import { Suspense } from "react";
+import Loading from "@/components/shared/Loading/page";
 
 export const revalidate = 0;
 
@@ -20,5 +22,9 @@ export default async function CategoriesPage({
 
   const { items, total } = booksResponse.data;
 
-  return <Books books={items} total={total} limit={limit} />;
+  return (
+    <Suspense fallback={<Loading />}>
+      <Books books={items} total={total} limit={limit} />
+    </Suspense>
+  );
 }

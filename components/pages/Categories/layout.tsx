@@ -6,6 +6,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 import ICategory from "@/interfaces/category.interface";
+import { Button } from "@nextui-org/button";
+import { useSession } from "next-auth/react";
 
 interface CategoriesProps {
   categories: ICategory[];
@@ -13,6 +15,7 @@ interface CategoriesProps {
 }
 
 export default function Categories(props: CategoriesProps) {
+  const session = useSession();
   const pathname = usePathname();
 
   return (
@@ -21,21 +24,28 @@ export default function Categories(props: CategoriesProps) {
         <Card isBlurred>
           <CardBody>
             <Tabs selectedKey={pathname}>
-              {props.categories.map((category) => {
-                return (
-                  <Tab
-                    key={`/${category.id}`}
-                    as={Link}
-                    href={`/${category.id}`}
-                    title={category.name}
-                  />
-                );
-              })}
+              {props.categories.map((category) => (
+                <Tab
+                  key={`/${category.id}`}
+                  as={Link}
+                  href={`/${category.id}`}
+                  title={category.name}
+                />
+              ))}
             </Tabs>
           </CardBody>
         </Card>
       </div>
-      {props.children}
+      <div className="space-y-2">
+        {(session.data?.user?.current?.role ?? 0) > 0 && (
+          <div className="flex justify-end">
+            <Button color="primary" as={Link} href="/books/create">
+              Create book
+            </Button>
+          </div>
+        )}
+        {props.children}
+      </div>
     </div>
   );
 }

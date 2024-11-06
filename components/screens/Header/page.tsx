@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import {
   Navbar,
   NavbarBrand,
@@ -18,41 +19,30 @@ import { useDisclosure } from "@nextui-org/use-disclosure";
 import { Avatar } from "@nextui-org/avatar";
 import { Spinner } from "@nextui-org/spinner";
 import { signOut, useSession } from "next-auth/react";
-import { IoLogInOutline, IoSettingsOutline } from "react-icons/io5";
-import { FiUser } from "react-icons/fi";
+import { IoLogInOutline } from "react-icons/io5";
+import { LuShoppingCart } from "react-icons/lu";
 
 import ThemeSwitcher from "./ThemeSwitcher/page";
-
 import Dialog from "@/components/shared/Dialog/page";
-import IDropdownItem from "@/interfaces/dropdownItem.interface";
 import { siteConfig } from "@/config/site";
-import { LuSearch, LuShoppingCart } from "react-icons/lu";
-import { Badge } from "@nextui-org/badge";
+import IDropdownItem from "@/interfaces/dropdownItem.interface";
+import { VariantProps } from "@nextui-org/theme";
+import { User } from "@nextui-org/user";
 
 export default function Header() {
-  const session = useSession();
-
+  const { data: session, status } = useSession();
   const {
     isOpen: isOpenSignOutModal,
     onOpen: onOpenSignOutModal,
     onOpenChange: onOpenChangeSignOutModal,
   } = useDisclosure();
 
-  const handleSignOut = async () => {
-    await signOut();
-    onOpenChangeSignOutModal();
-  };
-
   const dropdownItems: IDropdownItem[] = [
     {
-      key: "user",
-      children: session.data?.user.current?.name,
-      startContent: <FiUser size={20} />,
-    },
-    {
-      key: "settings",
-      children: "Settings",
-      startContent: <IoSettingsOutline size={20} />,
+      key: "cart",
+      children: "Cart",
+      href: `/users/${session?.user.current?.id}/cart`,
+      startContent: <LuShoppingCart size={20} />,
     },
     {
       key: "signOut",
@@ -63,7 +53,12 @@ export default function Header() {
     },
   ];
 
-  const enabledDropdownItems = dropdownItems.filter((item) => !item.isDisabled);
+  const navbarItems: VariantProps<typeof NavbarItem>[] = [
+    {
+      key: "themeSwitcher",
+      children: <ThemeSwitcher />,
+    },
+  ];
 
   return (
     <Navbar maxWidth="2xl">
@@ -75,46 +70,47 @@ export default function Header() {
         </NavbarBrand>
       </NavbarContent>
       <NavbarContent justify="end">
-        <NavbarItem>
-          <Badge content="9+" color="danger">
-            <Button variant="light" isIconOnly>
-              <LuShoppingCart size={20} />
-            </Button>
-          </Badge>
-        </NavbarItem>
-        <NavbarItem>
-          <Button variant="light" isIconOnly>
-            <LuSearch size={20} />
-          </Button>
-        </NavbarItem>
-        <NavbarItem>
-          <ThemeSwitcher />
-        </NavbarItem>
-        {session.status === "loading" ? (
-          <Spinner />
-        ) : session.status === "authenticated" && session.data.user.current ? (
+        {navbarItems.map((item) => (
+          <NavbarItem key={item.key}>{item.children}</NavbarItem>
+        ))}
+        {status === "loading" ? (
           <NavbarItem>
-            <Dropdown backdrop="blur" placement="bottom-end">
-              <DropdownTrigger>
-                <Avatar
-                  isBordered
-                  className="cursor-pointer"
-                  size="sm"
-                  src={session.data.user.current.image ?? "/no-avatar.jpg"}
-                />
-              </DropdownTrigger>
-              <DropdownMenu variant="shadow">
-                {enabledDropdownItems.map(({ isDisabled, key, ...item }) => (
-                  <DropdownItem key={key} {...item} />
-                ))}
-              </DropdownMenu>
-            </Dropdown>
+            <Spinner />
+          </NavbarItem>
+        ) : status === "authenticated" && session.user.current ? (
+          <>
+            <NavbarItem>
+              <Dropdown backdrop="blur" placement="bottom-end">
+                <DropdownTrigger>
+                  <User
+                    as="button"
+                    avatarProps={{
+                      isBordered: true,
+                      size: "sm",
+                      src: session.user.current.image ?? "/no-avatar.jpg",
+                    }}
+                    name={session.user.current.name}
+                    description={session.user.current.login}
+                  />
+                </DropdownTrigger>
+                <DropdownMenu variant="shadow">
+                  {dropdownItems
+                    .filter((item) => !item.isDisabled)
+                    .map(({ key, ...item }) => (
+                      <DropdownItem key={key} {...item} />
+                    ))}
+                </DropdownMenu>
+              </Dropdown>
+            </NavbarItem>
             <Dialog
               actions={[
                 {
                   key: "signOut",
                   children: "Sign out",
-                  onPress: async () => await handleSignOut(),
+                  onPress: () => {
+                    signOut();
+                    onOpenChangeSignOutModal();
+                  },
                   color: "danger",
                 },
               ]}
@@ -123,7 +119,7 @@ export default function Header() {
               title="Sign out"
               onOpenChange={onOpenChangeSignOutModal}
             />
-          </NavbarItem>
+          </>
         ) : (
           <NavbarItem>
             <Button

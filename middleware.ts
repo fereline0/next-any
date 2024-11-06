@@ -7,6 +7,29 @@ export default auth((req) => {
     return NextResponse.redirect(new URL("/", req.url));
   }
 
+  if (
+    (req.auth?.user?.current?.role ?? 0) <= 0 &&
+    req.nextUrl.pathname === "/books/create"
+  ) {
+    return NextResponse.redirect(new URL("/", req.url));
+  }
+
+  if (
+    (req.auth?.user?.current?.role ?? 0) <= 0 &&
+    req.nextUrl.pathname === "/books/create"
+  ) {
+    return NextResponse.redirect(new URL("/", req.url));
+  }
+
+  if (
+    (req.auth?.user?.current?.role ?? 0) <= 0 &&
+    req.nextUrl.pathname.startsWith("/users/") &&
+    req.nextUrl.pathname.endsWith("/cart") &&
+    req.nextUrl.pathname !== `/users/${req.auth?.user?.current?.id}/cart`
+  ) {
+    return NextResponse.redirect(new URL("/", req.url));
+  }
+
   return NextResponse.next();
 });
 

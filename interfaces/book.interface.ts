@@ -7,6 +7,5 @@ export default interface IBook extends IBaseEntity {
   price: number;
   image?: string;
   authorId: number;
-  publishingId: number;
   categories: ICategory[];
 }

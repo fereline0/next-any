@@ -1,14 +1,10 @@
 import IAuthor from "@/interfaces/author.interface";
 import IService from "@/interfaces/service.interface";
 
-export default async (
-  id: number,
-  page: number,
-  limit: number,
-): Promise<IService<IAuthor>> => {
+export default async (id: number): Promise<IService<IAuthor>> => {
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/Authors/${id}?page=${page}&limit=${limit}`,
+      `${process.env.NEXT_PUBLIC_API_URL}/api/Authors/${id}`,
     );
 
     const resData = await res.json();
