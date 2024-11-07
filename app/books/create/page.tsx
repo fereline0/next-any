@@ -1,10 +1,10 @@
+import { notFound } from "next/navigation";
+import { Suspense } from "react";
+
 import CreateBook from "@/components/pages/CreateBook/page";
 import Loading from "@/components/shared/Loading/page";
 import authorsService from "@/services/authors.service";
 import categoriesService from "@/services/categories.service";
-import publishingsService from "@/services/publishings.service";
-import { notFound } from "next/navigation";
-import { Suspense } from "react";
 
 export const revalidate = 0;
 
@@ -22,7 +22,7 @@ export default async function CreatePage() {
 
   return (
     <Suspense fallback={<Loading />}>
-      <CreateBook categories={categories.data} authors={authors.data.items} />
+      <CreateBook authors={authors.data.items} categories={categories.data} />
     </Suspense>
   );
 }

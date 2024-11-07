@@ -1,8 +1,8 @@
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
 
 import categoriesService from "@/services/categories.service";
 import Categories from "@/components/pages/Categories/layout";
-import { Suspense } from "react";
 import Loading from "@/components/shared/Loading/page";
 
 export const revalidate = 0;

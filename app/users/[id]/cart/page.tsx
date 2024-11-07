@@ -1,8 +1,9 @@
+import { notFound } from "next/navigation";
+import { Suspense } from "react";
+
 import Cart from "@/components/pages/Cart/page";
 import Loading from "@/components/shared/Loading/page";
 import cartFromUserService from "@/services/cartFromUser.service";
-import { notFound } from "next/navigation";
-import { Suspense } from "react";
 
 export const revalidate = 0;
 
@@ -28,7 +29,7 @@ export default async function CartsPage({
 
   return (
     <Suspense fallback={<Loading />}>
-      <Cart cartFromUser={items} total={total} limit={limit} />
+      <Cart cartFromUser={items} limit={limit} total={total} />
     </Suspense>
   );
 }

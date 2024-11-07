@@ -1,22 +1,23 @@
 "use client";
 
-import Main from "@/components/shared/Content/Main/page";
-import Content from "@/components/shared/Content/page";
-import SideBar from "@/components/shared/Content/SideBar/page";
-import ICategory from "@/interfaces/category.interface";
 import { Button } from "@nextui-org/button";
 import { Card, CardBody } from "@nextui-org/card";
 import { Input, Textarea } from "@nextui-org/input";
 import { Select, SelectItem } from "@nextui-org/select";
 import { Selection } from "@nextui-org/react";
 import { IoAddOutline } from "react-icons/io5";
-import IAuthor from "@/interfaces/author.interface";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import bookRequest from "@/requests/book.request";
 import { useState } from "react";
-import useCreateBook from "@/hooks/useCreateBook";
 import { useRouter } from "next/navigation";
+
+import bookRequest from "@/requests/book.request";
+import useCreateBook from "@/hooks/useCreateBook";
+import IAuthor from "@/interfaces/author.interface";
+import ICategory from "@/interfaces/category.interface";
+import SideBar from "@/components/shared/Content/SideBar/page";
+import Content from "@/components/shared/Content/page";
+import Main from "@/components/shared/Content/Main/page";
 
 interface ICreateBookProps {
   categories: ICategory[];
@@ -72,10 +73,10 @@ export default function CreateBook(props: ICreateBookProps) {
                   bookValidation.formState.errors.categories?.message
                 }
                 isInvalid={!!bookValidation.formState.errors.categories}
-                selectionMode="multiple"
-                selectedKeys={categories}
-                onSelectionChange={setCategories}
                 label="Category"
+                selectedKeys={categories}
+                selectionMode="multiple"
+                onSelectionChange={setCategories}
               >
                 {props.categories.map((category) => (
                   <SelectItem key={category.id}>{category.name}</SelectItem>
@@ -84,26 +85,26 @@ export default function CreateBook(props: ICreateBookProps) {
               <Select
                 errorMessage={bookValidation.formState.errors.author?.message}
                 isInvalid={!!bookValidation.formState.errors.author}
+                label="Author"
                 selectedKeys={[author]}
                 onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
                   setAuthor(e.target.value)
                 }
-                label="Author"
               >
                 {props.authors.map((author) => (
                   <SelectItem key={author.id}>{author.name}</SelectItem>
                 ))}
               </Select>
               <Button
+                fullWidth
+                color="primary"
+                isLoading={createBook.isMutating}
+                startContent={<IoAddOutline size={20} />}
                 onPress={async () =>
                   await bookValidation.handleSubmit(
                     async () => await handleSubmit(),
                   )()
                 }
-                isLoading={createBook.isMutating}
-                color="primary"
-                startContent={<IoAddOutline size={20} />}
-                fullWidth
               >
                 Create article
               </Button>
@@ -123,11 +124,11 @@ export default function CreateBook(props: ICreateBookProps) {
                 onChange={(e) => setTitle(e.target.value)}
               />
               <Input
-                type="number"
-                label="Price"
-                min={0}
                 errorMessage={bookValidation.formState.errors.price?.message}
                 isInvalid={!!bookValidation.formState.errors.price}
+                label="Price"
+                min={0}
+                type="number"
                 value={price}
                 onChange={(e) => setPrice(e.target.value)}
               />

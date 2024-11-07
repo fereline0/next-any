@@ -3,6 +3,7 @@ export default (url: string, init?: RequestInit) => {
     if (r.status === 204) {
       return null;
     }
+
     return r.json();
   });
 };

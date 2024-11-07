@@ -1,9 +1,12 @@
+import { notFound } from "next/navigation";
+import { Suspense } from "react";
+
 import Author from "@/components/pages/Author/page";
 import Loading from "@/components/shared/Loading/page";
 import authorService from "@/services/author.service";
 import booksFromAuthorService from "@/services/booksFromAuthor.service";
-import { notFound } from "next/navigation";
-import { Suspense } from "react";
+
+export const revalidate = 0;
 
 export default async function AuthorPage({
   params,
@@ -34,8 +37,8 @@ export default async function AuthorPage({
       <Author
         author={author.data}
         books={booksFromAuthor.data.items}
-        total={booksFromAuthor.data.total}
         limit={limit}
+        total={booksFromAuthor.data.total}
       />
     </Suspense>
   );

@@ -16,18 +16,18 @@ import {
   DropdownMenu,
 } from "@nextui-org/dropdown";
 import { useDisclosure } from "@nextui-org/use-disclosure";
-import { Avatar } from "@nextui-org/avatar";
 import { Spinner } from "@nextui-org/spinner";
 import { signOut, useSession } from "next-auth/react";
 import { IoLogInOutline } from "react-icons/io5";
 import { LuShoppingCart } from "react-icons/lu";
+import { VariantProps } from "@nextui-org/theme";
+import { User } from "@nextui-org/user";
 
 import ThemeSwitcher from "./ThemeSwitcher/page";
+
 import Dialog from "@/components/shared/Dialog/page";
 import { siteConfig } from "@/config/site";
 import IDropdownItem from "@/interfaces/dropdownItem.interface";
-import { VariantProps } from "@nextui-org/theme";
-import { User } from "@nextui-org/user";
 
 export default function Header() {
   const { data: session, status } = useSession();
@@ -89,8 +89,8 @@ export default function Header() {
                       size: "sm",
                       src: session.user.current.image ?? "/no-avatar.jpg",
                     }}
-                    name={session.user.current.name}
                     description={session.user.current.login}
+                    name={session.user.current.name}
                   />
                 </DropdownTrigger>
                 <DropdownMenu variant="shadow">

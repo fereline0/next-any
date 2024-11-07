@@ -16,7 +16,7 @@ export default function Books(props: BooksProps) {
           return <BookPreview key={book.id} book={book} />;
         })}
       </div>
-      <ServerPaginate total={props.total} limit={props.limit} />
+      <ServerPaginate limit={props.limit} total={props.total} />
     </div>
   );
 }

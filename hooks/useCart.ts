@@ -1,5 +1,6 @@
-import fetcher from "@/utils/fetcher";
 import useSWRMutation from "swr/mutation";
+
+import fetcher from "@/utils/fetcher";
 
 export default (id: number) => {
   return useSWRMutation(

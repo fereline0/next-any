@@ -1,9 +1,10 @@
+import { Card, CardBody } from "@nextui-org/card";
+import { Image } from "@nextui-org/image";
+
 import Content from "@/components/shared/Content/page";
 import Main from "@/components/shared/Content/Main/page";
 import SideBar from "@/components/shared/Content/SideBar/page";
 import IAuthor from "@/interfaces/author.interface";
-import { Card, CardBody } from "@nextui-org/card";
-import { Image } from "@nextui-org/image";
 import IBook from "@/interfaces/book.interface";
 import IPaginate from "@/interfaces/paginate.interface";
 import BookPreview from "@/components/screens/BookPreview/page";
@@ -42,7 +43,7 @@ export default function Author(props: IAuthorProps) {
               return <BookPreview key={book.id} book={book} />;
             })}
           </div>
-          <ServerPaginate total={props.total} limit={props.limit} />
+          <ServerPaginate limit={props.limit} total={props.total} />
         </div>
       </Main>
     </Content>

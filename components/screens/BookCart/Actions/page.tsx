@@ -1,6 +1,5 @@
 "use client";
 
-import IDropdownItem from "@/interfaces/dropdownItem.interface";
 import { MdOutlineDelete } from "react-icons/md";
 import {
   Dropdown,
@@ -10,11 +9,13 @@ import {
 } from "@nextui-org/dropdown";
 import { Button } from "@nextui-org/button";
 import { LuMoreVertical } from "react-icons/lu";
+import { useDisclosure } from "@nextui-org/modal";
+import { useRouter } from "next/navigation";
+
 import ICart from "@/interfaces/cart.interface";
 import useDeleteCart from "@/hooks/useDeleteCart";
 import Dialog from "@/components/shared/Dialog/page";
-import { useDisclosure } from "@nextui-org/modal";
-import { useRouter } from "next/navigation";
+import IDropdownItem from "@/interfaces/dropdownItem.interface";
 
 interface IActionsProps {
   cart: ICart;
@@ -47,7 +48,7 @@ export default function Actions(props: IActionsProps) {
     <>
       <Dropdown backdrop="blur" placement="bottom-end">
         <DropdownTrigger>
-          <Button variant="light" isIconOnly>
+          <Button isIconOnly variant="light">
             <LuMoreVertical size={20} />
           </Button>
         </DropdownTrigger>

@@ -1,7 +1,6 @@
 "use client";
 
-import IDropdownItem from "@/interfaces/dropdownItem.interface";
-import { MdOutlineDelete } from "react-icons/md";
+import { MdModeEdit, MdOutlineDelete } from "react-icons/md";
 import {
   Dropdown,
   DropdownItem,
@@ -10,15 +9,19 @@ import {
 } from "@nextui-org/dropdown";
 import { Button } from "@nextui-org/button";
 import { LuMoreVertical } from "react-icons/lu";
-import Dialog from "@/components/shared/Dialog/page";
 import { useDisclosure } from "@nextui-org/modal";
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
+
+import Dialog from "@/components/shared/Dialog/page";
 import IBook from "@/interfaces/book.interface";
 import useDeleteBook from "@/hooks/useDeleteBook";
-import { useSession } from "next-auth/react";
+import IDropdownItem from "@/interfaces/dropdownItem.interface";
 
 interface IActionsProps {
   book: IBook;
+  isEditing: boolean;
+  setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export default function Actions(props: IActionsProps) {
@@ -30,6 +33,14 @@ export default function Actions(props: IActionsProps) {
   const deleteBook = useDeleteBook(props.book.id);
 
   const dropdownItems: IDropdownItem[] = [
+    {
+      key: "edit",
+      children: "Edit",
+      startContent: <MdModeEdit size={20} />,
+      onClick: () => props.setIsEditing(true),
+      isDisabled:
+        props.isEditing || (session?.data?.user?.current?.role ?? 0) <= 0,
+    },
     {
       key: "delete",
       children: "Delete",
@@ -50,7 +61,7 @@ export default function Actions(props: IActionsProps) {
     <>
       <Dropdown backdrop="blur" placement="bottom-end">
         <DropdownTrigger>
-          <Button variant="light" isIconOnly>
+          <Button isIconOnly variant="light">
             <LuMoreVertical size={20} />
           </Button>
         </DropdownTrigger>

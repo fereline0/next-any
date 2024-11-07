@@ -1,11 +1,11 @@
 import { Card, CardBody, CardFooter } from "@nextui-org/card";
 import { Image } from "@nextui-org/image";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 
 import IBook from "@/interfaces/book.interface";
 import authorService from "@/services/author.service";
 import { formatPrice } from "@/utils/format";
-import { notFound } from "next/navigation";
 
 interface BookPreviewProps {
   book: IBook;

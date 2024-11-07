@@ -4,10 +4,10 @@ import { Card, CardBody } from "@nextui-org/card";
 import { Tab, Tabs } from "@nextui-org/tabs";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-
-import ICategory from "@/interfaces/category.interface";
 import { Button } from "@nextui-org/button";
 import { useSession } from "next-auth/react";
+
+import ICategory from "@/interfaces/category.interface";
 
 interface CategoriesProps {
   categories: ICategory[];
@@ -39,7 +39,7 @@ export default function Categories(props: CategoriesProps) {
       <div className="space-y-2">
         {(session.data?.user?.current?.role ?? 0) > 0 && (
           <div className="flex justify-end">
-            <Button color="primary" as={Link} href="/books/create">
+            <Button as={Link} color="primary" href="/books/create">
               Create book
             </Button>
           </div>

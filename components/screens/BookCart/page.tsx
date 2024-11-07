@@ -1,12 +1,14 @@
-import ICart from "@/interfaces/cart.interface";
-import bookService from "@/services/book.service";
 import { notFound } from "next/navigation";
 import { Card, CardBody, CardFooter } from "@nextui-org/card";
 import { Image } from "@nextui-org/image";
+import { Link } from "@nextui-org/link";
+
+import Actions from "./Actions/page";
+
 import { formatPrice } from "@/utils/format";
 import authorService from "@/services/author.service";
-import { Link } from "@nextui-org/link";
-import Actions from "./Actions/page";
+import bookService from "@/services/book.service";
+import ICart from "@/interfaces/cart.interface";
 
 interface IBookCartProps {
   item: ICart;
@@ -37,7 +39,7 @@ export default async function BookCart(props: IBookCartProps) {
       <CardFooter className="flex-wrap gap-2 justify-between">
         <div className="flex flex-col text-pretty">
           <Link href={`/books/${book.data.id}`}>{book.data.title}</Link>
-          <Link href={`/authors/${author.data.id}`} className="text-gray-400">
+          <Link className="text-gray-400" href={`/authors/${author.data.id}`}>
             {author.data.name}
           </Link>
           <span>{formattedPrice}</span>

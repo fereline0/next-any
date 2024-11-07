@@ -1,6 +1,7 @@
+import useSWR from "swr";
+
 import ICart from "@/interfaces/cart.interface";
 import fetcher from "@/utils/fetcher";
-import useSWR from "swr";
 
 export default (bookId: number, userId?: number) => {
   return useSWR<ICart>(
