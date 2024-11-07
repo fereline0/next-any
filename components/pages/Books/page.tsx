@@ -1,6 +1,6 @@
 import BookPreview from "../../screens/BookPreview/page";
 
-import IBook from "@/interfaces/book.interface";
+import IBook from "@/interfaces/bookDTO.interface";
 import ServerPaginate from "@/components/shared/ServerPaginate/page";
 import IPaginate from "@/interfaces/paginate.interface";
 

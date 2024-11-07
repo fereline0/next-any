@@ -5,7 +5,7 @@ import Content from "@/components/shared/Content/page";
 import Main from "@/components/shared/Content/Main/page";
 import SideBar from "@/components/shared/Content/SideBar/page";
 import IAuthor from "@/interfaces/author.interface";
-import IBook from "@/interfaces/book.interface";
+import IBook from "@/interfaces/bookDTO.interface";
 import IPaginate from "@/interfaces/paginate.interface";
 import BookPreview from "@/components/screens/BookPreview/page";
 import ServerPaginate from "@/components/shared/ServerPaginate/page";

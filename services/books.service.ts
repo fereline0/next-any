@@ -1,11 +1,11 @@
 import IService from "@/interfaces/service.interface";
-import IBook from "@/interfaces/book.interface";
 import IPagedResult from "@/interfaces/pagedResult.interface";
+import IBookDTO from "@/interfaces/bookDTO.interface";
 
 export default async (
   page: number,
   limit: number,
-): Promise<IService<IPagedResult<IBook[]>>> => {
+): Promise<IService<IPagedResult<IBookDTO[]>>> => {
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/api/Books?page=${page}&limit=${limit}`,
@@ -20,7 +20,7 @@ export default async (
       };
     }
 
-    const pagedResult: IPagedResult<IBook[]> = resData;
+    const pagedResult: IPagedResult<IBookDTO[]> = resData;
 
     return {
       data: pagedResult,

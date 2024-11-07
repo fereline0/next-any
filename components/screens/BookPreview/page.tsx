@@ -3,7 +3,7 @@ import { Image } from "@nextui-org/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
-import IBook from "@/interfaces/book.interface";
+import IBook from "@/interfaces/bookDTO.interface";
 import authorService from "@/services/author.service";
 import { formatPrice } from "@/utils/format";
 

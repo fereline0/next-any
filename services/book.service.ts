@@ -1,7 +1,7 @@
 import IService from "@/interfaces/service.interface";
-import IBook from "@/interfaces/book.interface";
+import IBookDTO from "@/interfaces/bookDTO.interface";
 
-export default async (id: number): Promise<IService<IBook>> => {
+export default async (id: number): Promise<IService<IBookDTO>> => {
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/api/Books/${id}`,
@@ -16,10 +16,10 @@ export default async (id: number): Promise<IService<IBook>> => {
       };
     }
 
-    const book: IBook = resData;
+    const bookDTO: IBookDTO = resData;
 
     return {
-      data: book,
+      data: bookDTO,
       error: null,
     };
   } catch (error) {

@@ -9,6 +9,7 @@ export default (
   price: string,
   image: string,
   authorId: string,
+  categoryIds: number[],
 ) => {
   return useSWRMutation(
     `${process.env.NEXT_PUBLIC_API_URL}/api/Books/${id}`,
@@ -25,6 +26,7 @@ export default (
           price,
           image,
           authorId,
+          categoryIds,
         }),
       }),
   );

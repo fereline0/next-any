@@ -1,11 +1,10 @@
 import IBaseEntity from "./baseEntity.interface";
-import ICategory from "./category.interface";
 
-export default interface IBook extends IBaseEntity {
+export default interface IBookDTO extends IBaseEntity {
   title: string;
   description: string;
   price: number;
   image?: string;
   authorId: number;
-  categories: ICategory[];
+  categoryIds: number[];
 }

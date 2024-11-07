@@ -17,7 +17,7 @@ import ICategory from "@/interfaces/category.interface";
 import bookRequest from "@/requests/book.request";
 import useEditBook from "@/hooks/useEditBook";
 import IAuthor from "@/interfaces/author.interface";
-import IBook from "@/interfaces/book.interface";
+import IBook from "@/interfaces/bookDTO.interface";
 import SideBar from "@/components/shared/Content/SideBar/page";
 import Content from "@/components/shared/Content/page";
 import Main from "@/components/shared/Content/Main/page";
@@ -36,7 +36,9 @@ export default function Book(props: BookProps) {
   const [price, setPrice] = useState(props.book.price.toString());
   const [image, setImage] = useState(props.book.image || "");
   const [categories, setCategories] = useState<Selection>(
-    new Set(props.categories?.map((category) => category.id.toString())),
+    new Set(
+      props.book.categoryIds?.map((category) => category.toString() ?? []),
+    ),
   );
   const [isEditing, setIsEditing] = useState(false);
 
@@ -60,6 +62,7 @@ export default function Book(props: BookProps) {
     price,
     image,
     props.author.id.toString(),
+    categoriesToArray,
   );
 
   const handleSave = async () => {

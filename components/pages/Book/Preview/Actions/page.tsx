@@ -14,7 +14,7 @@ import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 
 import Dialog from "@/components/shared/Dialog/page";
-import IBook from "@/interfaces/book.interface";
+import IBook from "@/interfaces/bookDTO.interface";
 import useDeleteBook from "@/hooks/useDeleteBook";
 import IDropdownItem from "@/interfaces/dropdownItem.interface";
 

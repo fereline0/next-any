@@ -11,7 +11,7 @@ import { Input } from "@nextui-org/input";
 import Actions from "./Actions/page";
 
 import { formatPrice } from "@/utils/format";
-import IBook from "@/interfaces/book.interface";
+import IBook from "@/interfaces/bookDTO.interface";
 import useDeleteCart from "@/hooks/useDeleteCart";
 import useCreateCart from "@/hooks/useCreateCart";
 import useCartIsCreated from "@/hooks/useCartIsCreated";
