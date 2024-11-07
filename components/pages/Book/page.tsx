@@ -42,8 +42,6 @@ export default function Book(props: BookProps) {
 
   const categoriesToArray = Array.from(categories).map(Number);
 
-  console.log(categoriesToArray);
-
   const bookValidation = useForm({
     resolver: zodResolver(bookRequest),
     values: {
