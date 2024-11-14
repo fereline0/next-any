@@ -106,7 +106,7 @@ export default function CreateBook(props: ICreateBookProps) {
                   )()
                 }
               >
-                Create article
+                Create book
               </Button>
             </div>
           </CardBody>
